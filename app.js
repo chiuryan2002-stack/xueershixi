@@ -21,8 +21,8 @@ const CEFR=[['A1',T('入門','Breakthrough'),T('能理解並使用日常熟悉�
  ['C1',T('流利','Effective operational proficiency'),T('能理解各種長篇、難度高的文章，並掌握言外之意。','Understands a wide range of demanding, longer texts and recognises implicit meaning.')],
  ['C2',T('精通','Mastery'),T('幾乎能理解所聽所讀的一切，表達精確、細膩。','Understands virtually everything heard or read; expresses themselves precisely and with nuance.')]];
 const cefrToLv=c=>/^A/.test(c)?'L1':/^B/.test(c)?'L2':'L3';
-const NAT=[['TW',T('臺灣','Taiwan')],['JP',T('日本','Japan')],['KR',T('韓國','Korea')],['VN',T('越南','Vietnam')],['ID',T('印尼','Indonesia')],['TH',T('泰國','Thailand')],['PH',T('菲律賓','Philippines')],['MY',T('馬來西亞','Malaysia')],['SG',T('新加坡','Singapore')],['HK',T('香港','Hong Kong')],['MO',T('澳門','Macau')],['CN',T('中國大陸','Mainland China')],['US',T('美國','United States')],['CA',T('加拿大','Canada')],['GB',T('英國','United Kingdom')],['FR',T('法國','France')],['DE',T('德國','Germany')],['ES',T('西班牙','Spain')],['RU',T('俄羅斯','Russia')],['IN',T('印度','India')],['AU',T('澳洲','Australia')],['OT',T('其他','Other')]];
-const L1S=[['zh',T('華語（中文）','Mandarin Chinese')],['nan',T('臺灣台語','Taiwanese Hokkien')],['hak',T('客家語','Hakka')],['yue',T('粵語','Cantonese')],['en',T('英語','English')],['ja',T('日語','Japanese')],['ko',T('韓語','Korean')],['vi',T('越南語','Vietnamese')],['id',T('印尼語','Indonesian')],['th',T('泰語','Thai')],['tl',T('菲律賓語','Filipino')],['ms',T('馬來語','Malay')],['fr',T('法語','French')],['de',T('德語','German')],['es',T('西班牙語','Spanish')],['ru',T('俄語','Russian')],['ar',T('阿拉伯語','Arabic')],['hi',T('印地語','Hindi')],['ot',T('其他','Other')]];
+const NAT=[['TW',T('臺灣','Taiwan')],['JP',T('日本','Japan')],['KR',T('韓國','Korea')],['VN',T('越南','Vietnam')],['ID',T('印尼','Indonesia')],['TH',T('泰國','Thailand')],['PH',T('菲律賓','Philippines')],['MY',T('馬來西亞','Malaysia')],['SG',T('新加坡','Singapore')],['HK',T('香港','Hong Kong')],['MO',T('澳門','Macau')],['CN',T('中國大陸','Mainland China')],['US',T('美國','United States')],['CA',T('加拿大','Canada')],['GB',T('英國','United Kingdom')],['FR',T('法國','France')],['DE',T('德國','Germany')],['ES',T('西班牙','Spain')],['RU',T('俄羅斯','Russia')],['IN',T('印度','India')],['AU',T('澳洲','Australia')],['NO',T('挪威','Norway')],['OT',T('其他','Other')]];
+const L1S=[['zh',T('華語（中文）','Mandarin Chinese')],['nan',T('臺灣台語','Taiwanese Hokkien')],['hak',T('客家語','Hakka')],['yue',T('粵語','Cantonese')],['en',T('英語','English')],['ja',T('日語','Japanese')],['ko',T('韓語','Korean')],['vi',T('越南語','Vietnamese')],['id',T('印尼語','Indonesian')],['th',T('泰語','Thai')],['tl',T('菲律賓語','Filipino')],['ms',T('馬來語','Malay')],['fr',T('法語','French')],['de',T('德語','German')],['es',T('西班牙語','Spanish')],['ru',T('俄語','Russian')],['ar',T('阿拉伯語','Arabic')],['hi',T('印地語','Hindi')],['no',T('挪威語','Norwegian')],['ot',T('其他','Other')]];
 const ROLES={teacher:[T('華語教師','Chinese teacher'),T('看全班學習紀錄、瀏覽題庫與講義','Class records, item bank and handouts')],learner:[T('華語為二語學習者','Learner of Chinese (L2)'),T('分級練習、錯題本、間隔複習','Graded practice, mistakes, spaced review')],native:[T('華語為母語者','Native speaker of Chinese'),T('挑戰高級題，看看語感和 BERT 誰準','Take on advanced items and test your intuition against BERT')]};
 const lab_=(list,k)=>(list.find(x=>x[0]===k)||[k,k])[1];
 function prof(){ return Y.profiles().find(p=>p.id===Y.curId())||{}; }
@@ -50,7 +50,7 @@ function explain(q){
   return `<ul class="why">${bits.map(b=>`<li>${b}</li>`).join('')}</ul>`;
 }
 function noteHTML(m){ const n=D.notes[m]; return `<div class="note"><div class="nh"><span class="big" style="color:${COLOR[m]}">${m}</span><b>${esc(EN?n.core_en:n.core)}</b></div><p>${esc(EN?n.en:n.zh)}</p><div class="exs">${n.ex.map(x=>`<span>${esc(x)}</span>`).join('')}</div></div>`; }
-function pairTip(a,b){ const p=D.pairs.find(p=>(p.a===a&&p.b===b)||(p.a===b&&p.b===a)); return p?`<div class="pair"><b><span style="color:${COLOR[p.a]}">${p.a}</span> vs. <span style="color:${COLOR[p.b]}">${p.b}</span></b><p>${esc(EN?p.en:p.zh)}</p></div>`:''; }
+function pairTip(a,b){ const p=D.pairs.find(p=>(p.a===a&&p.b===b)||(p.a===b&&p.b===a)); return p?`<div class="pair"><b><span style="color:${COLOR[p.a]}">${p.a}</span> <i class="vs">vs.</i> <span style="color:${COLOR[p.b]}">${p.b}</span></b><p>${esc(EN?p.en:p.zh)}</p></div>`:''; }
 function bertBars(q,pick){ if(!q.p) return ''; const tot=q.p.reduce((a,b)=>a+b,0)||1; const bp=bertPick(q);
   return `<div class="bert"><div class="bh">${T('BERT 的選擇（完整語境，四字機率）','BERT’s choice (full context, four-way probability)')}</div>${M.map((m,i)=>`<div class="br"><span style="color:${COLOR[m]}">${m}</span><i><em style="width:${(q.p[i]/tot*100).toFixed(1)}%;background:${COLOR[m]}"></em></i><small>${(q.p[i]/tot*100).toFixed(1)}%</small></div>`).join('')}
   <div class="bv">${bp===q.m?T('BERT 選對了。','BERT got it right.'):T(`BERT 選了「${bp}」，選錯了。`,`BERT picked “${bp}” — wrong.`)}${pick===q.m&&bp!==q.m?T(' 這題你贏過 BERT！',' You beat BERT on this one!'):''}</div></div>`; }
@@ -169,7 +169,7 @@ function practice(){
   $('#view').innerHTML=`<h2>${T('選擇程度','Choose a level')}</h2><p class="mut">${T('每回 10 題。答完會看到為什麼，答錯的題會自動進入錯題本和複習卡。','10 questions per round. You see why after each answer; mistakes go to your Mistakes list and review cards.')}</p>
   <div class="levels">${['L1','L2','L3'].map(l=>`<button class="lvl ${s.level===l?'on':''}" data-l="${l}"><b>${LV[l]} <small class="cefrtag">${LVC[l]}</small></b><span>${LVD[l]}</span><small>${D[l].length} ${T('題','items')}</small></button>`).join('')}</div><p class="mut small">${CEFR_NOTE}</p>
   <h3>${T('專項特訓','Focused drills')}</h3>
-  <div class="levels small">${D.pairs.map((p,i)=>`<button class="lvl" data-pair="${i}"><b><span style="color:${COLOR[p.a]}">${p.a}</span> vs. <span style="color:${COLOR[p.b]}">${p.b}</span></b><span>${T('只練這兩個字','Only these two words')}</span></button>`).join('')}
+  <div class="levels small">${D.pairs.map((p,i)=>`<button class="lvl" data-pair="${i}"><b><span style="color:${COLOR[p.a]}">${p.a}</span> <i class="vs">vs.</i> <span style="color:${COLOR[p.b]}">${p.b}</span></b><span>${T('只練這兩個字','Only these two words')}</span></button>`).join('')}
    <button class="lvl" data-wrong="1" ${wrongIds.length?'':'disabled'}><b>${T('重練錯題','Redo mistakes')}</b><span>${wrongIds.length} ${T('題','items')}</span></button></div>
   <h3>${T('教學小卡','Teaching notes')}</h3><div class="notes">${M.map(noteHTML).join('')}</div>`;
   document.querySelectorAll('.lvl[data-l]').forEach(b=>b.onclick=()=>{ const s=Y.load(); s.level=b.dataset.l; Y.save(s); start(pickQs(D[b.dataset.l],10),b.dataset.l,LV[b.dataset.l]); });
@@ -267,11 +267,7 @@ function me(){
   const board=ps.map(p=>{ const x=Y.load(p.id); const y=stats(x); return {p,xp:x.xp,acc:y.acc,n:y.n,best:x.streak.best}; }).sort((a,b)=>b.xp-a.xp);
   const P=prof();
   $('#view').innerHTML=`<h2>${T('我的','Me')}</h2>
-  <div class="card"><div class="ch"><b>${T('身分與設定','Identity and settings')}</b><button class="btn ghost sm" id="editSu">${T('修改','Edit')}</button></div><p class="metaline">${esc(metaLabel(metaOf(P)))||'—'}</p></div>
-  <div class="card"><div class="ch"><b>${P.role==='teacher'?T('使用者','Users'):T('學習者','Learner')}</b><span class="mut">${T('資料只存在這台裝置，不會上傳','Data stays on this device; nothing is uploaded')}</span></div>
-   <div class="form"><input id="nm" maxlength="20" placeholder="${T('你的名字或暱稱','Your name or nickname')}" value="${esc((ps.find(p=>p.id===cur)||{}).name||'')}"><button class="btn sm" id="saveNm">${T('儲存','Save')}</button></div>
-   <div class="profs">${ps.map(p=>`<button class="chip ${p.id===cur?'on':''}" data-p="${p.id}">${esc(p.name||T('未命名','Unnamed'))}</button>`).join('')}<button class="chip" id="addP">＋ ${T('新增學習者','Add learner')}</button></div>
-   <p class="mut small">${T('同一台平板可以給好幾位學生輪流用，各自的進度分開記錄。','Several students can share one tablet; each keeps separate progress.')}</p></div>
+  <div class="card mehead"><div><b>${esc(P.name||T('未命名','Unnamed'))}</b><p class="metaline">${esc(metaLabel(metaOf(P)))||'—'}</p></div><button class="btn ghost sm" id="openSet">⚙ ${T('設定','Settings')}</button></div>
   <div class="card"><div class="ch"><b>${T('成就徽章','Badges')}</b><span class="mut">${Object.keys(s.badges).length} / ${BADGES.length}</span></div>
    <div class="badges">${BADGES.map(([k,n,d])=>`<div class="badge ${s.badges[k]?'got':''}" title="${esc(d)}"><span class="bdg">${k}</span><b>${n}</b><small>${d}</small></div>`).join('')}</div></div>
   <div class="card"><div class="ch"><b>${T('本機排行榜','Leaderboard on this device')}</b><span class="mut">${T('全班排行請看「教師」頁','Class ranking: see Teacher tab')}</span></div>
@@ -284,11 +280,8 @@ function me(){
   <div class="card"><div class="ch"><b>${T('每日提醒','Daily reminder')}</b></div>
    <div class="form"><label class="sw"><input type="checkbox" id="rmOn" ${s.remind.on?'checked':''}><span></span>${T('開啟通知提醒','Notifications')}</label><input type="time" id="rmT" value="${s.remind.time}"><button class="btn ghost sm" id="ics">${T('加入行事曆（.ics）','Add to calendar (.ics)')}</button></div>
    <p class="mut small" id="rmMsg">${T('通知需要允許權限；手機上建議先安裝 App。iPhone 需 iOS 16.4 以上且已加入主畫面。加入行事曆則所有手機都能用。','Notifications need permission; install the app first on phones (iPhone: iOS 16.4+ and added to Home Screen). The calendar option works on every phone.')}</p></div>
-  <div class="card"><div class="ch"><b>${T('重設','Reset')}</b></div><button class="btn ghost sm danger" id="reset">${T('清除這位學習者的所有進度','Erase this learner’s progress')}</button></div>`;
-  $('#editSu').onclick=()=>{ su=null; setup(); };
-  $('#saveNm').onclick=()=>{ const ps=Y.profiles(); ps.find(p=>p.id===Y.curId()).name=$('#nm').value.trim(); Y.LS.set('yq-profiles',JSON.stringify(ps)); toast(T('已儲存','Saved')); me(); };
-  document.querySelectorAll('.chip[data-p]').forEach(b=>b.onclick=()=>{ Y.LS.set('yq-profile',b.dataset.p); me(); });
-  $('#addP').onclick=()=>{ const n=prompt(T('新學習者的名字','Name of the new learner')); if(n==null) return; const ps=Y.profiles(); const id='p'+Date.now().toString(36); ps.push({id,name:n.trim()}); Y.LS.set('yq-profiles',JSON.stringify(ps)); Y.LS.set('yq-profile',id); me(); };
+`;
+  $('#openSet').onclick=()=>openSettings();
   $('#exF').onclick=()=>{ const r=exportRecord(); download(`學習紀錄_${r.name}_${Y.today()}.json`,JSON.stringify(r)); };
   $('#exC').onclick=async()=>{ const code='YQ1:'+toB64(exportRecord()); try{ await navigator.clipboard.writeText(code); toast(T('學習代碼已複製','Learning code copied')); }catch(e){ $('#imT').value=code; document.querySelector('.imp').open=true; toast(T('請手動複製下方代碼','Copy the code below manually')); } };
   const doImport=obj=>{ if(!obj||obj.kind!=='yq-learn'||!obj.state) throw 0; if(!confirm(T('這會取代目前這位學習者的進度，確定嗎？','This replaces the current learner’s progress. Continue?'))) return; Y.save(Object.assign(Y.blank(),obj.state)); const ps=Y.profiles(); const p=ps.find(p=>p.id===Y.curId()); if(!p.name) p.name=obj.name; Y.LS.set('yq-profiles',JSON.stringify(ps)); toast(T('匯入完成','Imported')); me(); };
@@ -298,7 +291,6 @@ function me(){
   $('#rmT').onchange=e=>{ const s=Y.load(); s.remind.time=e.target.value||'20:00'; Y.save(s); };
   $('#ics').onclick=()=>{ const t=($('#rmT').value||'20:00').replace(':',''); const d=Y.today().replace(/-/g,''); const url=location.href.split('#')[0];
     download('原前舊老_每日提醒.ics',['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//yqjl//learn//ZH','BEGIN:VEVENT','UID:yqjl-daily-'+d+'@yqjl','DTSTAMP:'+d+'T000000Z','DTSTART:'+d+'T'+t+'00','DURATION:PT10M','RRULE:FREQ=DAILY',`SUMMARY:${T('練習原、前、舊、老（學而時習）','Practise 原前舊老 (daily)')}`,'DESCRIPTION:'+url+'#home','URL:'+url+'#home','BEGIN:VALARM','TRIGGER:PT0M','ACTION:DISPLAY','DESCRIPTION:'+T('今天練習了嗎？','Practised today?'),'END:VALARM','END:VEVENT','END:VCALENDAR'].join('\r\n'),'text/calendar'); };
-  $('#reset').onclick=()=>{ if(confirm(T('確定清除這位學習者的所有進度？無法復原。','Erase all progress for this learner? This cannot be undone.'))){ Y.LS.del('yq-learn-'+Y.curId()); me(); } };
 }
 async function notify(title,body){ try{ const r=await navigator.serviceWorker?.getRegistration(); if(r) r.showNotification(title,{body,icon:'icons/icon-192.png',badge:'icons/icon-192.png',tag:'yq-daily',data:{url:'./#home'}}); else new Notification(title,{body}); }catch(e){} }
 async function registerPeriodic(){ try{ const r=await navigator.serviceWorker.ready; if('periodicSync' in r) await r.periodicSync.register('yq-daily',{minInterval:12*3600e3}); }catch(e){} }
@@ -354,6 +346,46 @@ function teacher(){
   document.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{ cls=cls.filter(c=>c.name!==b.dataset.del); saveCls(); teacher(); });
   const csv=$('#csv'); if(csv) csv.onclick=()=>{ const lines=[['name','role','cefr','nationality','first_language','xp','answers','accuracy',...M.map(m=>'acc_'+m),'best_streak'].join(',')]; rows.forEach(({r,st})=>{ const m=r.meta||{}; lines.push([`"${r.name.replace(/"/g,'""')}"`,m.role||'',m.cefr||'',m.nat==='OT'?m.natOther:m.nat||'',m.l1==='ot'?m.l1Other:m.l1||'',r.state.xp,st.n,(st.acc||0).toFixed(3),...M.map(m=>st.by[m].n?(st.by[m].ok/st.by[m].n).toFixed(3):''),r.state.streak.best||0].join(',')); }); download(`全班學習紀錄_${Y.today()}.csv`,'﻿'+lines.join('\n'),'text/csv'); };
 }
+
+/* ================= SETTINGS PANEL (gear) ================= */
+function openSettings(){
+  const S=window.YQ_SITE||{}, snd=(window.SFX||{}).on!==false;
+  closeSettings();
+  const ps=Y.profiles(), cur=Y.curId(), P=prof();
+  const ov=document.createElement('div'); ov.id='setOv'; ov.className='setov';
+  ov.innerHTML=`<div class="sheet" role="dialog" aria-modal="true" aria-label="${T('設定','Settings')}" data-noi18n>
+   <div class="sh-h"><b>⚙ ${T('設定','Settings')}</b><button class="x" id="setX" aria-label="${T('關閉','Close')}">✕</button></div>
+   <section><h4>${T('帳號','Account')}</h4>
+    <div class="profs">${ps.map(p=>`<button class="chip ${p.id===cur?'on':''}" data-sp="${p.id}">${esc(p.name||T('未命名','Unnamed'))}<small>${p.role?' · '+(ROLES[p.role]||[''])[0]:''}</small></button>`).join('')}<button class="chip" id="spAdd">＋ ${T('新增帳號','Add account')}</button></div>
+    <div class="form"><input id="spName" maxlength="24" value="${esc(P.name||'')}" placeholder="${T('名字或暱稱','Name or nickname')}"><button class="btn sm" id="spSave">${T('改名','Rename')}</button>${ps.length>1?`<button class="btn ghost sm danger" id="spDel">${T('刪除此帳號','Delete account')}</button>`:''}</div>
+    <p class="mut small">${T('同一台裝置可以有好幾個帳號（例如共用平板），進度各自分開。','One device can hold several accounts (e.g. a shared tablet); progress stays separate.')}</p></section>
+   <section><h4>${T('身分','Identity')}</h4><p class="metaline">${esc(metaLabel(metaOf(P)))||'—'}</p>
+    <button class="btn ghost sm" id="spRole">${T('修改身分、程度、國籍、母語','Change identity, level, nationality, first language')}</button></section>
+   <section><h4>${T('語言','Language')}</h4><div class="seg"><button data-lang="zh" class="${S.lang!=='en'?'on':''}">中文</button><button data-lang="en" class="${S.lang==='en'?'on':''}">English</button></div></section>
+   <section><h4>${T('介面','Appearance')}</h4><div class="seg"><button data-th="light" class="${S.theme!=='dark'?'on':''}">☀ ${T('亮版','Light')}</button><button data-th="dark" class="${S.theme==='dark'?'on':''}">☾ ${T('暗版','Dark')}</button></div></section>
+   <section><h4>${T('聲音','Sound')}</h4><div class="seg"><button data-snd="1" class="${snd?'on':''}">🔊 ${T('開啟','On')}</button><button data-snd="0" class="${snd?'':'on'}">🔇 ${T('關閉','Off')}</button></div></section>
+   <section><h4>${T('重置','Reset')}</h4>
+    <button class="btn ghost sm" id="spResetUI">${T('重置介面','Reset interface')}</button><p class="mut small">${T('恢復預設：亮版、中文、聲音開啟，並重新進行身分設定；學習紀錄會保留。','Restores defaults (light, Chinese, sound on) and reruns the identity setup; learning records are kept.')}</p>
+    <button class="btn ghost sm danger" id="spWipe">${T('清除這台裝置上的所有資料','Erase all data on this device')}</button></section>
+   <p class="mut small">${T('資料只存在這台裝置的瀏覽器裡，不會上傳。','Everything is stored only in this device’s browser.')}</p></div>`;
+  document.body.appendChild(ov); requestAnimationFrame(()=>ov.classList.add('on'));
+  const q=s=>ov.querySelector(s);
+  ov.onclick=e=>{ if(e.target===ov) closeSettings(); }; q('#setX').onclick=closeSettings;
+  ov.querySelectorAll('[data-sp]').forEach(b=>b.onclick=()=>{ Y.LS.set('yq-profile',b.dataset.sp); closeSettings(); su=null; setTabs(); tab=TABS[0]?TABS[0][0]:'home'; render(); });
+  q('#spAdd').onclick=()=>{ const ps=Y.profiles(); const id='p'+Date.now().toString(36); ps.push({id,name:''}); Y.LS.set('yq-profiles',JSON.stringify(ps)); Y.LS.set('yq-profile',id); closeSettings(); su=null; render(); };
+  q('#spSave').onclick=()=>{ saveProf({name:q('#spName').value.trim()}); toast(T('已改名','Renamed')); openSettings(); };
+  const del=q('#spDel'); if(del) del.onclick=()=>{ if(!confirm(T('刪除這個帳號和它的所有學習紀錄？','Delete this account and all its records?'))) return; const id=Y.curId(); const ps=Y.profiles().filter(p=>p.id!==id); Y.LS.set('yq-profiles',JSON.stringify(ps)); Y.LS.del('yq-learn-'+id); Y.LS.set('yq-profile',ps[0].id); closeSettings(); su=null; render(); };
+  q('#spRole').onclick=()=>{ closeSettings(); su=null; setup(); };
+  ov.querySelectorAll('[data-lang]').forEach(b=>b.onclick=()=>{ if(S.setLang) S.setLang(b.dataset.lang); });
+  ov.querySelectorAll('[data-th]').forEach(b=>b.onclick=()=>{ if(S.setTheme) S.setTheme(b.dataset.th); ov.querySelectorAll('[data-th]').forEach(x=>x.classList.toggle('on',x===b)); });
+  ov.querySelectorAll('[data-snd]').forEach(b=>b.onclick=()=>{ if(window.SFX&&window.SFX.set) window.SFX.set(b.dataset.snd==='1'); ov.querySelectorAll('[data-snd]').forEach(x=>x.classList.toggle('on',x===b)); });
+  q('#spResetUI').onclick=()=>{ if(!confirm(T('恢復預設介面並重新設定身分？學習紀錄會保留。','Reset the interface and rerun setup? Records are kept.'))) return; Y.LS.set('yq-app-theme','light'); Y.LS.set('yq-sound','on'); saveProf({role:''}); const wasEN=S.lang==='en'; Y.LS.set('yq-lang','zh'); if(wasEN){ location.hash=''; location.reload(); return; } if(S.setTheme) S.setTheme('light'); closeSettings(); su=null; location.hash=''; render(); };
+  q('#spWipe').onclick=()=>{ if(!confirm(T('確定清除這台裝置上「學而時習」的所有帳號、進度和班級資料？無法復原。','Erase every account, all progress and class data on this device? This cannot be undone.'))) return;
+    try{ Object.keys(localStorage).filter(k=>/^yq-(learn-|profiles|profile|class|notified|app-theme)/.test(k)).forEach(k=>localStorage.removeItem(k)); }catch(e){} location.hash=''; location.reload(); };
+  document.addEventListener('keydown',escClose);
+}
+function escClose(e){ if(e.key==='Escape') closeSettings(); }
+function closeSettings(){ const o=$('#setOv'); if(o) o.remove(); document.removeEventListener('keydown',escClose); }
 
 /* ================= SEMANTIC GLASSES ================= */
 const GL_SAMPLE='公司去年改組後，原總經理轉任顧問，由新任總經理接手。前董事長已在三年前卸任，至今很少公開露面。上週聚餐時，幾位舊同事聊起當年一起加班的日子，大家都很懷念。財務部的老員工王姐在公司待了二十年，到現在還是大家最信任的老同事。目前員工共有三百人，福利依舊不錯。';
@@ -456,6 +488,7 @@ function setupInstall(){
 
 /* ================= boot ================= */
 function boot(){
+  const g=$('#gear'); if(g){ g.title=T('設定','Settings'); g.setAttribute('aria-label',T('設定','Settings')); g.onclick=()=>openSettings(); }
   if('serviceWorker' in navigator && location.protocol!=='file:'){ const had=!!navigator.serviceWorker.controller; navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).then(r=>r.update()).catch(()=>{}); navigator.serviceWorker.addEventListener('controllerchange',()=>{ if(had&&!sessionStorage.getItem('yq-sw-reloaded')){ sessionStorage.setItem('yq-sw-reloaded','1'); location.reload(); } }); }
   render(); reminderCheck(); setInterval(reminderCheck,60e3);
 }
