@@ -1,5 +1,5 @@
 /* 原前舊老 service worker: offline cache + daily reminder */
-const VERSION='yqapp-v4';
+const VERSION='yqapp-v5';
 const CORE=['./','index.html','site.css','site.js','i18n.js','app.js','learn_store.js','learn_data.js','glasses.js','manifest.webmanifest','icons/icon-192.png','icons/icon-512.png','icons/maskable-512.png','icons/icon-180.png'];
 self.addEventListener('install',e=>{ e.waitUntil(caches.open(VERSION).then(c=>c.addAll(CORE.map(u=>new Request(u,{cache:'reload'})))).then(()=>self.skipWaiting())); });
 self.addEventListener('activate',e=>{ e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>(k.startsWith('yqapp-')&&k!==VERSION)||k==='yq-v1').map(k=>caches.delete(k)))).then(()=>self.clients.claim())); });

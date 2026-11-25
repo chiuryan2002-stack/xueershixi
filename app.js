@@ -155,7 +155,7 @@ function home(){
    <a class="cta" href="#practice"><b>${T('開始練習','Start practising')}</b><span>${LV[s.level||'L1']}（${LVC[s.level||'L1']}）· 10 ${T('題','questions')}</span></a>
    <a class="cta alt" href="#review"><b>${T('複習卡片','Review cards')}</b><span>${due?T(`${due} 張到期`,`${due} due`):T('今天沒有到期的卡','Nothing due today')}</span></a>
   </div>
-  <div class="card install" id="installCard" hidden><div><b>${T('把「學而時習」安裝到手機','Install the app on your phone')}</b><p class="mut" id="installHint"></p></div><button class="btn" id="installBtn">${T('安裝 App','Install app')}</button></div>`;
+  <div class="card install" id="installCard" hidden><div><b>${T('把「學而時習」安裝到電腦或手機','Install the app on this device')}</b><p class="mut" id="installHint"></p></div><button class="btn" id="installBtn">${T('安裝 App','Install app')}</button></div>`;
   if(!done) document.querySelectorAll('#dOpts .opt').forEach(b=>b.onclick=()=>{ const pick=b.dataset.m, ok=pick===dq.m||(dq.acc||[]).includes(pick); const acc=dq.acc||[]; const ok2=pick===dq.m||acc.includes(pick); const r=Y.record({id:dq.id,gold:dq.m,pick,ok:ok2,lv:dq.lv,src:'daily'}); const s2=r.state; s2.daily[Y.today()]={pick,ok}; s2.dailyDone++; s2.xp+=20; Y.save(s2); (ok?(SFX().correct||(()=>{})):(SFX().wrong||(()=>{})))(); afterRecord(); home(); });
   setupInstall();
 }
@@ -292,7 +292,7 @@ function me(){
   $('#ics').onclick=()=>{ const t=($('#rmT').value||'20:00').replace(':',''); const d=Y.today().replace(/-/g,''); const url=location.href.split('#')[0];
     download('原前舊老_每日提醒.ics',['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//yqjl//learn//ZH','BEGIN:VEVENT','UID:yqjl-daily-'+d+'@yqjl','DTSTAMP:'+d+'T000000Z','DTSTART:'+d+'T'+t+'00','DURATION:PT10M','RRULE:FREQ=DAILY',`SUMMARY:${T('練習原、前、舊、老（學而時習）','Practise 原前舊老 (daily)')}`,'DESCRIPTION:'+url+'#home','URL:'+url+'#home','BEGIN:VALARM','TRIGGER:PT0M','ACTION:DISPLAY','DESCRIPTION:'+T('今天練習了嗎？','Practised today?'),'END:VALARM','END:VEVENT','END:VCALENDAR'].join('\r\n'),'text/calendar'); };
 }
-async function notify(title,body){ try{ const r=await navigator.serviceWorker?.getRegistration(); if(r) r.showNotification(title,{body,icon:'icons/icon-192.png',badge:'icons/icon-192.png',tag:'yq-daily',data:{url:'./#home'}}); else new Notification(title,{body}); }catch(e){} }
+async function notify(title,body){ try{ const r=await navigator.serviceWorker?.getRegistration(); if(r) r.showNotification(title,{body,icon:'icons/icon-192.png?v=2',badge:'icons/icon-192.png?v=2',tag:'yq-daily',data:{url:'./#home'}}); else new Notification(title,{body}); }catch(e){} }
 async function registerPeriodic(){ try{ const r=await navigator.serviceWorker.ready; if('periodicSync' in r) await r.periodicSync.register('yq-daily',{minInterval:12*3600e3}); }catch(e){} }
 function reminderCheck(){ const s=Y.load(); if(!s.remind.on||!('Notification' in window)||Notification.permission!=='granted') return; const now=new Date(); const [h,m]=s.remind.time.split(':').map(Number); if(s.streak.last!==Y.today()&&(now.getHours()>h||(now.getHours()===h&&now.getMinutes()>=m))&&Y.LS.get('yq-notified')!==Y.today()){ Y.LS.set('yq-notified',Y.today()); notify(T('今天練習了嗎？','Practised today?'),T('花兩分鐘做一題每日一題，保持連續紀錄。','Two minutes for the daily question keeps your streak alive.')); } }
 
@@ -364,6 +364,7 @@ function openSettings(){
    <section><h4>${T('語言','Language')}</h4><div class="seg"><button data-lang="zh" class="${S.lang!=='en'?'on':''}">中文</button><button data-lang="en" class="${S.lang==='en'?'on':''}">English</button></div></section>
    <section><h4>${T('介面','Appearance')}</h4><div class="seg"><button data-th="light" class="${S.theme!=='dark'?'on':''}">☀ ${T('亮版','Light')}</button><button data-th="dark" class="${S.theme==='dark'?'on':''}">☾ ${T('暗版','Dark')}</button></div></section>
    <section><h4>${T('聲音','Sound')}</h4><div class="seg"><button data-snd="1" class="${snd?'on':''}">🔊 ${T('開啟','On')}</button><button data-snd="0" class="${snd?'':'on'}">🔇 ${T('關閉','Off')}</button></div></section>
+   ${isStandalone()?'':`<section><h4>${T('安裝','Install')}</h4><button class="btn sm" id="spInst">⤓ ${T('把 App 安裝到電腦或手機','Install the app on this device')}</button></section>`}
    <section><h4>${T('重置','Reset')}</h4>
     <button class="btn ghost sm" id="spResetUI">${T('重置介面','Reset interface')}</button><p class="mut small">${T('恢復預設：亮版、中文、聲音開啟，並重新進行身分設定；學習紀錄會保留。','Restores defaults (light, Chinese, sound on) and reruns the identity setup; learning records are kept.')}</p>
     <button class="btn ghost sm danger" id="spWipe">${T('清除這台裝置上的所有資料','Erase all data on this device')}</button></section>
@@ -375,6 +376,7 @@ function openSettings(){
   q('#spAdd').onclick=()=>{ const ps=Y.profiles(); const id='p'+Date.now().toString(36); ps.push({id,name:''}); Y.LS.set('yq-profiles',JSON.stringify(ps)); Y.LS.set('yq-profile',id); closeSettings(); su=null; render(); };
   q('#spSave').onclick=()=>{ saveProf({name:q('#spName').value.trim()}); toast(T('已改名','Renamed')); openSettings(); };
   const del=q('#spDel'); if(del) del.onclick=()=>{ if(!confirm(T('刪除這個帳號和它的所有學習紀錄？','Delete this account and all its records?'))) return; const id=Y.curId(); const ps=Y.profiles().filter(p=>p.id!==id); Y.LS.set('yq-profiles',JSON.stringify(ps)); Y.LS.del('yq-learn-'+id); Y.LS.set('yq-profile',ps[0].id); closeSettings(); su=null; render(); };
+  const si=q('#spInst'); if(si) si.onclick=()=>{ closeSettings(); doInstall(); };
   q('#spRole').onclick=()=>{ closeSettings(); su=null; setup(); };
   ov.querySelectorAll('[data-lang]').forEach(b=>b.onclick=()=>{ if(S.setLang) S.setLang(b.dataset.lang); });
   ov.querySelectorAll('[data-th]').forEach(b=>b.onclick=()=>{ if(S.setTheme) S.setTheme(b.dataset.th); ov.querySelectorAll('[data-th]').forEach(x=>x.classList.toggle('on',x===b)); });
@@ -474,20 +476,40 @@ function showLab(p,guess){
 
 /* ================= INSTALL (PWA) ================= */
 let deferred=null;
-addEventListener('beforeinstallprompt',e=>{ e.preventDefault(); deferred=e; setupInstall(); });
+const isStandalone=()=>matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
+const isIOS=()=>/iphone|ipad|ipod/i.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+addEventListener('beforeinstallprompt',e=>{ e.preventDefault(); deferred=e; refreshInstall(); });
+addEventListener('appinstalled',()=>{ deferred=null; refreshInstall(); toast(T('安裝完成！之後從桌面或主畫面的「原前舊老」圖示開啟。','Installed! Open it from the 原前舊老 icon on your desktop or home screen.')); });
+function refreshInstall(){ const b=$('#instTop'); if(b) b.hidden=isStandalone(); setupInstall(); }
+async function doInstall(){
+  if(deferred){ deferred.prompt(); const r=await deferred.userChoice; deferred=null; refreshInstall(); return r; }
+  installHelp();
+}
+function installHelp(){
+  closeSettings(); const ov=document.createElement('div'); ov.id='setOv'; ov.className='setov';
+  const ios=isIOS(), mac=/Macintosh/.test(navigator.userAgent)&&!ios, safari=/^((?!chrome|android|crios|edg).)*safari/i.test(navigator.userAgent);
+  const steps=ios?[T('用 Safari 開啟這個網址。','Open this address in Safari.'),T('點下方工具列的「分享」按鈕（方框加向上箭頭）。','Tap the Share button (square with an up arrow).'),T('往下滑，選「加入主畫面」，再按「新增」。','Scroll down, choose “Add to Home Screen”, then “Add”.')]
+   :safari&&mac?[T('在 Safari 選單列點「檔案」。','In Safari’s menu bar choose File.'),T('選「加入 Dock」，再按「加入」。','Choose “Add to Dock”, then “Add”.')]
+   :[T('用 Chrome 或 Edge 開啟這個網址。','Open this address in Chrome or Edge.'),T('點網址列右側的「安裝」圖示（電腦加向下箭頭），或右上角「⋮」→「投放、儲存及分享」→「安裝網頁應用程式」。','Click the Install icon at the right of the address bar, or ⋮ → Cast, save and share → Install page as app.'),T('如果之前裝過舊版「原前舊老」，請先在 chrome://apps 對舊圖示按右鍵 →「從 Chrome 中移除」，再安裝這一版。','If you installed the old 原前舊老 app before, first remove it at chrome://apps (right-click → Remove from Chrome), then install this one.')];
+  ov.innerHTML=`<div class="sheet instsheet" role="dialog" aria-modal="true"><div class="sh-h"><b>${T('安裝「學而時習」','Install the app')}</b><button class="x" id="setX">✕</button></div>
+   <section><img class="ico" src="icons/icon-192.png?v=2" alt=""><p>${T('安裝後會像一般 App 一樣出現在桌面或主畫面，打開時是獨立視窗，沒有網路也能練習。','Once installed it sits on your desktop or home screen, opens in its own window and works offline.')}</p></section>
+   <section><h4>${T('安裝步驟','Steps')}</h4><ol>${steps.map(x=>`<li>${x}</li>`).join('')}</ol></section>
+   <section><p class="mut small">${T('網址：','Address: ')}<b>${esc(location.origin+location.pathname)}</b></p></section></div>`;
+  document.body.appendChild(ov); requestAnimationFrame(()=>ov.classList.add('on'));
+  ov.onclick=e=>{ if(e.target===ov) closeSettings(); }; ov.querySelector('#setX').onclick=closeSettings; document.addEventListener('keydown',escClose);
+}
 function setupInstall(){
   const card=$('#installCard'); if(!card) return;
-  const standalone=matchMedia('(display-mode: standalone)').matches||navigator.standalone;
-  if(standalone) return;
-  const ios=/iphone|ipad|ipod/i.test(navigator.userAgent);
+  if(isStandalone()){ card.hidden=true; return; }
   card.hidden=false;
-  $('#installHint').textContent=deferred?T('安裝後會像一般 App 一樣出現在主畫面，沒有網路也能練習。','It appears on your home screen like any app and works offline.'):ios?T('iPhone／iPad：點 Safari 下方的「分享」，再選「加入主畫面」。','iPhone/iPad: tap Share in Safari, then “Add to Home Screen”.'):T('用 Chrome 或 Edge 開啟，從網址列右側或選單選「安裝應用程式」。','In Chrome or Edge, choose “Install app” from the address bar or menu.');
-  $('#installBtn').style.display=deferred?'':'none';
-  $('#installBtn').onclick=async()=>{ if(!deferred) return; deferred.prompt(); await deferred.userChoice; deferred=null; card.hidden=true; };
+  $('#installHint').textContent=T('安裝後會像一般 App 一樣出現在桌面或主畫面，打開時是獨立視窗，沒有網路也能練習。','It appears on your desktop or home screen like any app, opens in its own window and works offline.');
+  $('#installBtn').style.display=''; $('#installBtn').onclick=doInstall;
 }
 
 /* ================= boot ================= */
 function boot(){
+  const it=$('#instTop'); if(it){ it.hidden=isStandalone(); it.onclick=doInstall; it.querySelector('span').textContent=T('安裝 App','Install app'); }
+  if(new URLSearchParams(location.search).get('install')==='1'&&!isStandalone()) setTimeout(()=>{ if(deferred) doInstall(); else installHelp(); },900);
   const g=$('#gear'); if(g){ g.title=T('設定','Settings'); g.setAttribute('aria-label',T('設定','Settings')); g.onclick=()=>openSettings(); }
   if('serviceWorker' in navigator && location.protocol!=='file:'){ const had=!!navigator.serviceWorker.controller; navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).then(r=>r.update()).catch(()=>{}); navigator.serviceWorker.addEventListener('controllerchange',()=>{ if(had&&!sessionStorage.getItem('yq-sw-reloaded')){ sessionStorage.setItem('yq-sw-reloaded','1'); location.reload(); } }); }
   render(); reminderCheck(); setInterval(reminderCheck,60e3);
