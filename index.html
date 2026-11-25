@@ -131,6 +131,17 @@ textarea{width:100%;resize:vertical;line-height:1.6}
 .toast.on{transform:translate(-50%,0);opacity:1}
 .原{color:var(--yuan)}.前{color:var(--qian)}.舊{color:var(--jiu)}.老{color:var(--lao)}
 html[lang=en] .sent{line-height:2.5}
+.setup{max-width:760px;margin:0 auto}.setup h2{margin-top:14px}.setup-h .pbar{margin-top:8px}
+.cefr{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:12px 0}.cefr .lvl b small{font-family:var(--sans);font-size:13px;color:var(--muted);font-weight:500}
+@media (max-width:760px){.cefr{grid-template-columns:1fr 1fr}}@media (max-width:480px){.cefr{grid-template-columns:1fr}}
+.chips.big .chip{padding:9px 16px;font-size:15px}
+.setup input{margin-top:10px}.sumcard{margin-top:14px}.sumcard p{margin:6px 0 0;color:var(--muted)}
+.cefrtag{font-family:var(--sans);font-size:12px;font-weight:500;color:var(--muted);margin-left:4px}
+.metaline{margin:0;font-size:15px}
+.glout{margin-top:14px;padding:16px 18px;border-radius:14px;background:var(--track2);font-size:17px;line-height:2.1;white-space:pre-wrap;min-height:40px}
+.glsteps{padding-left:22px;margin:4px 0}.glsteps li{margin:10px 0;line-height:1.8}.glsteps code{padding:1px 6px;border-radius:6px;background:var(--track2);font-size:13px}
+.bmk{display:inline-block;margin-top:6px;padding:6px 14px;border-radius:20px;background:linear-gradient(135deg,#668fca,#776b97);color:#fff;text-decoration:none;font-weight:600;cursor:grab}
+
 </style>
 </head>
 <body>
@@ -143,6 +154,7 @@ html[lang=en] .sent{line-height:2.5}
 <script src="learn_store.js"></script>
 <script src="i18n.js"></script>
 <script src="site.js"></script>
+<script src="glasses.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

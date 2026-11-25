@@ -4,46 +4,46 @@ Every sentence contains a cue that decides the answer.
 Fields: (sentence with ＿, answer, also-acceptable, cue_zh, cue_en, English gloss)
 """
 
-L1 = [  # 初級：線索直接寫在句子裡（時間詞、離職、多年、至今）
+L1 = [  # 初級（CEFR A1–A2）：常用詞，線索直接寫在句子裡（以前、現在、已經、二十年）
  # 原
- ('新部長上任後，＿部長回到大學教書。','原',['前'],'有新人上任，原本擔任的人換了位置。正式的人事異動用「原」。','A new minister took office, so the one who held the post before has moved on. Formal reassignments use 原.','After the new minister took office, the former minister went back to teaching at a university.'),
- ('公司改組以後，＿總經理轉任顧問。','原',['前'],'「改組」是職位異動，原本的總經理換了角色。','"Restructuring" is a change of posts; the original general manager took a new role.','After the restructuring, the former general manager became an adviser.'),
- ('他調到總公司了，＿職位由林小姐接任。','原',[],'指他「原本」的那個職位，現在換人做。「前職位」不自然。','His original post, now taken by someone else. 前職位 sounds unnatural.','He has been transferred to headquarters; Ms. Lin has taken over his original post.'),
- ('合併以後，兩家公司的＿員工都被留了下來。','原',['舊'],'合併「之前」本來就在公司的員工。','The staff who were already there before the merger.','After the merger, the original staff of both companies were all kept on.'),
- ('他從業務部調到行銷部，可是＿部門的同事還常找他幫忙。','原',['前'],'「原部門」＝調職前原本所屬的部門，部門本身還在。','原部門 = the department he belonged to before the transfer; it still exists.','He moved from sales to marketing, but colleagues in his original department still often ask for his help.'),
- ('新校長八月才到任，在那之前由＿校長繼續主持校務。','原',[],'原本的校長還在做，所以不能用「前」（已經不在職）。','The existing principal is still in charge, so 前 (no longer in office) is wrong.','The new principal arrives in August; until then the current principal will keep running the school.'),
- ('這次人事異動以後，他又回到＿單位上班。','原',[],'回到「原本」所屬的單位。','Back to the unit he originally belonged to.','After this round of reassignments, he went back to work in his original unit.'),
- ('報導指出，該校＿校長已在上個月退休。','原',['前'],'新聞報導＋職稱，正式語氣常用「原」。','A news report plus a job title: formal register favours 原.','The report says the school’s former principal retired last month.'),
+ ('新校長來了以後，＿校長去別的學校工作。','原',['前'],'有新的人來，原來的人換了工作。正式的說法用「原」。','A new person came, so the one who was there before moved on. 原 is the formal choice.','After the new principal came, the former principal went to work at another school.'),
+ ('他換到別的部門了，＿部門的同事還常找他吃飯。','原',['前'],'「原部門」＝他原來的部門，那個部門還在。','原部門 = the department he was in before; it still exists.','He moved to another department, but colleagues from his original department still often ask him to dinner.'),
+ ('新經理還沒來，現在還是＿經理在做。','原',[],'原來的經理現在還在做，所以不能用「前」。','The original manager is still doing the job, so 前 (no longer there) is wrong.','The new manager has not come yet, so the original manager is still doing the job.'),
+ ('兩家公司變成一家以後，＿員工都還在。','原',['舊'],'變成一家「以前」就在的員工，現在還在。','Staff who were there before the two companies became one, still there now.','After the two companies became one, the original staff are all still there.'),
+ ('他去新公司工作了一年，又回到＿公司。','原',['舊','前'],'回到「原來」的公司。','Back to the company he was at originally.','He worked at a new company for a year and then went back to his original company.'),
+ ('新老闆來了，可是＿員工都沒有換。','原',['舊'],'員工是原來就在的，而且還在，所以不能用「前」。','The staff were already there and still are, so not 前.','A new boss came, but none of the original staff changed.'),
+ ('新主任下個月才來，這個月還是＿主任上班。','原',[],'原來的主任現在還在上班。','The original director is still at work this month.','The new director only comes next month; this month the original director is still at work.'),
+ ('新聞說，這個學校的＿校長已經不做了。','原',['前'],'新聞的正式說法常用「原」。','News reports often use the formal 原.','The news says this school’s former principal has stopped working there.'),
  # 前
- ('他是我們公司的＿員工，三年前就離職了。','前',[],'「三年前就離職」：關係已經結束，最常用「前」。','"Left three years ago": the tie has ended; 前 is the usual choice.','He is a former employee of our company; he left three years ago.'),
- ('＿總統今天出席了開幕典禮。','前',[],'卸任的國家元首固定說「前總統」。','A head of state who has left office is always 前總統.','The former president attended the opening ceremony today.'),
- ('這位是我＿上司，他已經轉到別家公司了。','前',['舊'],'上司已經離開，強調關係結束。','The boss has moved to another company: the tie has ended.','This is my former boss; he has moved to another company.'),
- ('離職以後，她在臉書上封鎖了＿主管。','前',[],'已經不是主管，而且關係疏遠（封鎖），不帶懷念，所以用「前」不用「舊」。','No longer her manager and the relationship is cold (blocked), so not the nostalgic 舊.','After quitting, she blocked her former manager on Facebook.'),
- ('他的＿雇主幫他寫了一封推薦信。','前',['舊'],'推薦信來自已經不再雇用他的人。','The reference comes from someone who no longer employs him.','His former employer wrote him a reference letter.'),
- ('已經卸任的＿董事長很少在公開場合露面。','前',['原'],'「已經卸任」＝職位結束。','"Has stepped down" = the post has ended.','The former chairman, who has stepped down, rarely appears in public.'),
- ('聽說你＿公司倒閉了，現在還好嗎？','前',['舊'],'你已經離開的公司。','A company you have already left.','I heard your former company went bankrupt. Are you okay?'),
- ('兩人已經拆夥，現在只是＿合夥人的關係。','前',[],'「拆夥」＝合作結束。','"Split up" = the partnership has ended.','They have split up; now they are just former partners.'),
+ ('他是我們公司的＿員工，三年前就離開了。','前',[],'「三年前就離開了」：現在已經不是員工。','"Left three years ago": no longer an employee.','He is a former employee of our company; he left three years ago.'),
+ ('＿總統今天也來了。','前',[],'已經不做總統的人，一定說「前總統」。','Someone who is no longer president is always 前總統.','The former president came today too.'),
+ ('這是我＿老闆，他已經去別的公司了。','前',['舊'],'他已經不是我的老闆了。','He is no longer my boss.','This is my former boss; he has gone to another company.'),
+ ('他三年前就不是經理了，大家還叫他＿經理。','前',['原'],'「已經不是」：用「前」。','"No longer": use 前.','He stopped being manager three years ago, but everyone still calls him the former manager.'),
+ ('我已經不在那家公司工作了，那是我的＿公司。','前',['舊'],'已經離開的公司。','A company I have already left.','I no longer work at that company; it is my former company.'),
+ ('離開公司以後，她跟＿老闆不說話了。','前',[],'已經不是老闆，而且關係不好，所以不用帶感情的「舊」。','No longer her boss, and on bad terms, so not the warm 舊.','After leaving the company, she stopped speaking to her former boss.'),
+ ('他是我們學校的＿校長，去年已經不做了。','前',['原'],'「去年已經不做了」：現在不是校長。','"Stopped last year": no longer principal.','He is our school’s former principal; he stopped last year.'),
+ ('我們已經不一起工作了，現在他是我的＿同事。','前',['舊'],'「已經不一起工作」：同事關係結束了。','"No longer work together": the tie has ended.','We no longer work together; now he is my former colleague.'),
  # 舊
- ('換了新工作，他週末還是常跟＿同事吃飯。','舊',['前'],'以前的同事，但感情還在，口語又帶懷念。','Colleagues from before, but the friendship remains: casual and nostalgic.','Even after changing jobs, he still often has dinner with his old colleagues on weekends.'),
- ('將軍退休以後，＿部屬每年都會來拜年。','舊',['老'],'過去帶過的部屬，情誼一直延續。','Subordinates from the past who still visit.','After the general retired, his former subordinates came to pay New Year visits every year.'),
- ('繞了一圈，他最後又回到＿老闆的公司上班。','舊',['前'],'「回去」找以前的老闆，帶懷念。','Going back to a boss from before: a nostalgic tie.','After all that, he went back to work at his old boss’s company.'),
- ('在街上巧遇＿同事，兩人聊起當年一起加班的日子。','舊',['前'],'「聊起當年」：回憶過去的關係。','"Talked about those days": looking back at a past tie.','He ran into an old colleague on the street, and they reminisced about working overtime together back then.'),
- ('同學會上，他碰到好幾位以前一起創業的＿夥伴。','舊',['前'],'「以前一起創業」：過去的夥伴，久別重逢。','"Started a business together back then": partners from the past.','At the reunion he met several old partners he had once started a business with.'),
- ('公司搬家那天，幾個已經離職的＿員工特地回來幫忙。','舊',['前'],'已經離開、但還有感情，特地回來幫忙。','They left, but still care enough to come back and help.','On moving day, a few former employees who had left came back specially to help.'),
- ('她把履歷寄給以前的＿上司，請他幫忙推薦。','舊',['前'],'過去的上司，關係還好到可以拜託。','A boss from before, close enough to ask a favour.','She sent her CV to her old boss and asked him for a recommendation.'),
- ('翻到一張十年前的合照，照片裡都是＿同事。','舊',['前'],'十年前的照片：看向過去，帶懷念。','A photo from ten years ago: looking back with nostalgia.','He came across a group photo from ten years ago, full of old colleagues.'),
+ ('他換了新工作，週末還常跟＿同事吃飯。','舊',['前'],'以前的同事，可是感情還在。','Colleagues from before, still friends.','He has a new job, but on weekends he still often eats with his old colleagues.'),
+ ('他又回到＿老闆的公司工作了。','舊',['前'],'回去找以前的老闆，有感情。','Going back to a boss from before: a warm tie.','He went back to work at his old boss’s company.'),
+ ('在路上看到＿同事，兩個人一起說以前的事。','舊',['前'],'「說以前的事」：想起過去。','"Talked about the old days": remembering the past.','He saw an old colleague on the street, and they talked about the old days.'),
+ ('這是十年前的照片，裡面都是我的＿同事。','舊',['前'],'十年前的照片：看以前的人，有想念的感覺。','A photo from ten years ago: looking back with fondness.','This is a photo from ten years ago; everyone in it is an old colleague of mine.'),
+ ('已經離開公司的＿員工，今天回來看我們。','舊',['前'],'人已經離開，可是還有感情，回來看大家。','They left but still care, so they came back to visit.','Former employees who had left the company came back to see us today.'),
+ ('她打電話給以前的＿老闆，請他幫忙。','舊',['前'],'以前的老闆，關係還好，可以請他幫忙。','A boss from before, close enough to ask for help.','She called her old boss and asked him for help.'),
+ ('我很想念＿公司的同事和朋友。','舊',['前'],'「想念」：看向過去，有感情。','"Miss": looking back with feeling.','I really miss the colleagues and friends at my old company.'),
+ ('過年的時候，他去看以前的＿主管。','舊',['前'],'以前的主管，現在還去看他：有感情。','A manager from before whom he still visits: a warm tie.','At New Year, he went to visit his old manager.'),
  # 老
- ('我們在同一個部門二十年了，是＿同事。','老',[],'共事二十年、現在還在一起：延續。','Twenty years in the same department and still together: continuing.','We have been in the same department for twenty years; we are long-time colleagues.'),
- ('他是公司的＿員工，從開幕做到現在。','老',[],'「從開幕做到現在」＝資深、仍在職。','"From opening day until now" = senior and still here.','He is a long-time employee who has worked here since the company opened.'),
- ('這家店的＿客戶都知道，週二不營業。','老',[],'長期往來、現在仍是客戶。','Long-standing customers who still come.','The shop’s regular customers all know it is closed on Tuesdays.'),
- ('李先生是我們的＿夥伴，合作十幾年了，一直很愉快。','老',[],'合作十幾年、現在仍持續。','Over a decade of partnership, still going.','Mr. Lee is our long-time partner; we have worked together happily for over ten years.'),
- ('王經理是我的＿長官，一路提拔我到今天。','老',[],'「一路……到今天」：關係延續至今，帶敬重。','"All the way to today": the tie continues, with respect.','Manager Wang is my long-time superior; he has supported me all the way to where I am today.'),
- ('幾位持股三十年的＿股東都支持這次的改革。','老',[],'「持股三十年」＝資深、長期。','"Held shares for thirty years" = long-standing.','Several shareholders who have held stock for thirty years support the reform.'),
- ('他和阿明搭檔十年了，是彼此的＿搭檔，一個眼神就懂。','老',[],'默契來自長久合作：延續＋親切。','Their rapport comes from years together: continuing and warm.','He and A-Ming have worked as a pair for ten years; they are old partners who understand each other at a glance.'),
- ('退休那天，一起工作了三十年的＿同事們為他辦了驚喜派對。','老',[],'一起工作三十年，直到今天都還是同事。','Thirty years together and colleagues right up to today.','On the day he retired, the colleagues he had worked with for thirty years threw him a surprise party.'),
+ ('我們一起工作二十年了，是＿同事。','老',[],'一起工作很久，現在還在一起。','Working together for a long time, and still together.','We have worked together for twenty years; we are long-time colleagues.'),
+ ('他從公司開門就在這裡工作，是＿員工。','老',[],'從一開始做到現在：很久，而且還在。','From the very start until now: long and still here.','He has worked here since the company opened; he is a long-time employee.'),
+ ('他每天都來這家店，來了十年，是＿客人。','老',[],'來了十年，現在還天天來。','Ten years and still coming every day.','He comes to this shop every day and has for ten years; he is a regular customer.'),
+ ('王先生買我們的東西二十年了，是＿客戶。','老',[],'二十年，而且現在還在買。','Twenty years, and still buying.','Mr. Wang has bought from us for twenty years; he is a long-standing customer.'),
+ ('李先生教我做事很多年了，到現在還是我的＿師傅。','老',[],'「到現在還是」：很久而且還在。','"Still, until now": long and ongoing.','Mr. Lee has taught me the trade for many years and is still my old master.'),
+ ('她在醫院工作四十年了，是醫院的＿醫生。','老',[],'四十年、現在還在工作：資深。','Forty years and still working: senior.','She has worked at the hospital for forty years; she is a veteran doctor there.'),
+ ('我們十年前就是同事，現在也還是，是＿同事。','老',[],'以前是，現在還是：很久而且還在。','Then and still now: long and ongoing.','We were colleagues ten years ago and still are; we are old colleagues.'),
+ ('他和我一起上班十五年，現在還一起，是我的＿夥伴。','老',[],'十五年，而且現在還一起：用「老」。','Fifteen years and still together: 老.','He and I have gone to work together for fifteen years and still do; he is my long-time partner.'),
 ]
 
-L2 = [  # 中級：線索要從情境推論
+L2 = [  # 中級（CEFR B1–B2）：線索要從情境推論
  # 原
  ('新政府上台後，＿行政院長轉任總統府資政。','原',['前'],'政府換人、他轉任新職：正式的職位異動。','A new government and a new post for him: a formal reassignment.','After the new government took office, the former premier became a senior adviser to the president.'),
  ('經過內部調動，＿課長的位置由林先生接任，他自己則升為經理。','原',[],'他沒有離開，只是升官，所以是「原本擔任」課長，不是「前」。','He did not leave, he was promoted, so it is the post he originally held (原), not a former one (前).','After an internal reshuffle, Mr. Lin took over his original section-chief post, and he was promoted to manager.'),
@@ -82,7 +82,7 @@ L2 = [  # 中級：線索要從情境推論
  ('這家公司靠著一群十幾年不離不棄的＿員工，撐過了金融海嘯。','老',[],'「十幾年不離不棄」：長期而且仍在。','"Stayed loyal for over a decade": long and still there.','The company survived the financial crisis thanks to a group of employees who had stayed loyal for more than ten years.'),
 ]
 
-L3 = [  # 高級：語域、評價與陷阱
+L3 = [  # 高級（CEFR C1–C2）：語域、評價與陷阱
  # 原
  ('官方公告指出，經濟部＿政務次長即日起調任國發會主任委員。','原',['前'],'公文語氣＋「調任」：正式的職位異動，用「原」。','Official notice plus "transferred": formal reassignment favours 原.','An official notice says the original political deputy minister of economic affairs is transferred, effective today, to head the National Development Council.'),
  ('兩家銀行合併後，＿行員的年資一律合併計算。','原',[],'合併前本來就在的行員，人還在，所以只能用「原」。','Tellers who were there before the merger and are still there: only 原 fits.','After the two banks merged, the original staff’s seniority was carried over in full.'),
