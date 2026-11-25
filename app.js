@@ -456,7 +456,7 @@ function setupInstall(){
 
 /* ================= boot ================= */
 function boot(){
-  if('serviceWorker' in navigator && location.protocol!=='file:') navigator.serviceWorker.register('sw.js').catch(()=>{});
+  if('serviceWorker' in navigator && location.protocol!=='file:'){ const had=!!navigator.serviceWorker.controller; navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).then(r=>r.update()).catch(()=>{}); navigator.serviceWorker.addEventListener('controllerchange',()=>{ if(had&&!sessionStorage.getItem('yq-sw-reloaded')){ sessionStorage.setItem('yq-sw-reloaded','1'); location.reload(); } }); }
   render(); reminderCheck(); setInterval(reminderCheck,60e3);
 }
 if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot); else boot();
